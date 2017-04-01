@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Read XML - AJAX Method</title>
+	<script type="text/javascript" src="js/jq.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+		// Using GetJSON
+		//var url="http://localhost/phonegap/database/json.php";
+		var url="http://swsinc.in/FBO/phonegap/json.php";
+		$.getJSON(url,function(result){
+			console.log(result);
+	        $.each(result, function(i, field){
+	        	var article_title=field.article_title;
+	        	var article_body=field.article_body;
+	        	var post_date=field.post_date;
+				var article_image=field.article_image;
+				var movie_or_serial_type=field.movie_or_serial_type;
+				var dir = "";
+				if(movie_or_serial_type == "movie") {
+					dir = "movie_images";
+				} else {
+					dir = "serial_images";
+				}
+				img_value = "http://swsinc.in/FBO/demo/"+dir+"/"+article_image;
+	            $("#listview").append("<a href='#'><img src='"+img_value+"' width='200' /><h2>"+ article_title + " </h2><p>"+ article_body +"</p><span> "+post_date+"</span></a><br><br>");
+	        });
+    	});
+	});
+
+	</script>
+</head>
+<body>
+	<div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+		<h1 class="title">Read Articles (JSON)</h1>
+	</div>
+	<br/><br/>
+	<div class="list" id="listview">
+	...Loading
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ServerSide</title>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/jq.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function()
+    {
+        $("#insert").click(function(){
+            var full_name=$("#full_name").val();
+            var password=$("#password").val();
+            var email=$("#email").val();
+            var dataString="full_name="+full_name+"&password="+password+"&email="+email+"&insert=";
+			//alert("Please fill the form properly");
+            if($.trim(full_name).length>0 & $.trim(password).length>0 & $.trim(email).length>0)
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "http://swsinc.in/FBO/phonegap/insert.php?callback=?",
+                    //url:"http://localhost/phonegap/database/insert.php",
+                    data: dataString,
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function(){ $("#insert").val('Connecting...');},
+                    success: function(data){
+                        if(data=="ok")
+                        {
+                            alert("inserted");
+                            $("#insert").val('submit');
+							$("#full_name").val('') ;
+							$("#password").val('') ;
+							$("#email").val('') ;
+                        }
+                        else if(data=="error")
+                        {
+                            alert("error");
+                        }
+                    }
+                });
+            } return false;
+			
+            });
+    });
+    </script>
+</head>
+<body>
+<div align="center">
+    <h3>Register into our system</h3>
+    <form action="" method="POST">
+    Full Name* : <input type="text" id="full_name" /><br><br>
+    Email* : &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="email" /><br><br>
+    Password* :<input type="password" id="password" /><br><br><br>
+    <input type="submit" id="insert" value="Register"/>
+    </form>
+    <a href="readjson.html">List Articles</a>
+	</div>
+</body>
+</html>
